@@ -10,7 +10,7 @@ dotenv.config();
 
 const app = express();
 app.use(cors({
-    origin: 'http://localhost:5173/', // Izinkan permintaan dari domain klien Anda
+    origin: 'https://klien-thinkmath.vercel.app', // Izinkan permintaan dari domain klien Anda
     credentials: true // Jika Anda menggunakan cookie
 }));
 
@@ -205,7 +205,7 @@ router.post('/forgotpassword', async (req, res) => {
             from: process.env.EMAIL_USER,
             to: email,
             subject: 'Reset Password',
-            text: `http://localhost:5173/resetpassword/${token}`
+            text: `https://klien-thinkmath.vercel.appresetpassword/${token}`
         };
 
         transporter.sendMail(mailOptions, function (error, info) {
