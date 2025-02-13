@@ -17,7 +17,7 @@ dotenv.config({ path: "./config/.env" });
 
 // Middleware CORS
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: ["https://klien-thinkmath.vercel.app", "http://localhost:5173"],
     methods: ["GET", "POST", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
@@ -39,20 +39,6 @@ app.use(cookieParser())
 app.use('/admin', AdminRouter)
 app.use('/user', UserRouter)
 app.use('/user/:id', UserRouter)
-
-
-// mongoose.connect(process.env.URI, { useNewUrlParser: true, useUnifiedTopology: true })
-//     .then(() => {
-//         console.log("Connected to MongoDB");
-//         app.listen(process.env.PORT, () => {
-//             console.log(`Server is running on port ${process.env.PORT}`);
-//         });
-//     })
-//     .catch(err => {
-//         console.log("MongoDB URI:", process.env.URI);
-//         console.log("Port:", process.env.PORT);
-//         console.error("Connection error", err);
-//     });
 
 mongoose.connect(process.env.URI)
     .then(() => {
