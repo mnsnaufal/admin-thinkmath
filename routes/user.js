@@ -205,7 +205,7 @@ router.post('/forgotpassword', async (req, res) => {
             from: process.env.EMAIL_USER,
             to: email,
             subject: 'Reset Password',
-            text: `https://klien-thinkmath.vercel.appresetpassword/${token}`
+            text: `https://klien-thinkmath.vercel.app/resetpassword/${token}`
         };
 
         transporter.sendMail(mailOptions, function (error, info) {
