@@ -31,24 +31,33 @@ router.post('/registerAdmin', async (req,res) => {
 
 //buat login
 router.post('/loginAdmin', async (req, res) => {
+    res.header("Access-Control-Allow-Origin", "https://klien-thinkmath.vercel.app");
+    res.header("Access-Control-Allow-Credentials", "true");
+
     const { username, password } = req.body;
     try {
         const admin = await Admin.findOne({ username });
         if (!admin) {
-            return res.status(400).json({ message: "akun tidak ditemukan" });
+            return res.status(400).json({ message: "Akun tidak ditemukan" });
         }
 
         const validPassword = await bcrypt.compare(password, admin.password);
         if (!validPassword) {
-            return res.status(400).json({ message: "Password Salah" });
+            return res.status(400).json({ message: "Password salah" });
         }
 
         const token = jwt.sign({ username: admin.username }, process.env.KEY, { expiresIn: '3h' });
-        res.cookie('token', token, { httpOnly: true, maxAge: 360000 });
+        res.cookie('token', token, { 
+            httpOnly: true, 
+            secure: true,  // Tambahkan ini untuk menghindari masalah di HTTPS
+            sameSite: 'None', // Pastikan cookie bisa diakses lintas domain
+            maxAge: 3600000 
+        });
+
         return res.status(200).json({ status: true, message: "Login Berhasil", token });
     } catch (error) {
         console.log(error);
-        return res.status(400).json(error);
+        return res.status(400).json({ message: "Terjadi kesalahan", error });
     }
 });
 
