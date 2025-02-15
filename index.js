@@ -28,13 +28,15 @@ app.use('/admin', AdminRouter);
 app.use('/user', UserRouter);
 
 //  Koneksi ke MongoDB
+// Koneksi ke MongoDB
 mongoose.connect(process.env.URI)
     .then(() => {
-        console.log("Connected to MongoDB");
+        console.log("✅ Connected to MongoDB");
         app.listen(process.env.PORT || 3000, () => {
-            console.log(`Server is running on port ${process.env.PORT || 3000}`);
+            console.log(`🚀 Server is running on port ${process.env.PORT || 3000}`);
         });
     })
     .catch(err => {
-        console.error("Connection error", err);
+        console.error("❌ MongoDB Connection Error:", err);
     });
+
